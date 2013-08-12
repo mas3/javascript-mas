@@ -1,4 +1,4 @@
-javascript-mas
+JavaScript-Mas
 ==============
 
 JavaScript misc library.

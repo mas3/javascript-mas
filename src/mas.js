@@ -29,7 +29,7 @@ var mas = {};
 /**
  * Indicates whether the specified value is blank(undefined or null or
  * empty string).
- * @param  {String} val value
+ * @param  {String} val value.
  * @return {String} true if the val parameter is blank; otherwise, false.
  */
 mas.is_blank = function (val) {
@@ -38,4 +38,18 @@ mas.is_blank = function (val) {
     }
 
     return false;
+};
+
+/**
+ * Rounds a value.
+ * @param  {Number} val value.
+ * @param  {Number} [precision=0] number of fractional digits.
+ * @return {Number} rounded value.
+ */
+mas.round = function (val, precision) {
+    if (mas.is_blank(precision)) {
+        precision = 0;
+    }
+
+    return Math.round(val * Math.pow(10, precision)) / Math.pow(10, precision);
 };

@@ -23,6 +23,44 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 describe("mas", function () {
 
+    describe("floor()", function () {
+        it("floor(1.4) = 1", function () {
+            expect(1).toEqual(mas.floor(1.4));
+        });
+
+        it("floor(-1.4) = -2", function () {
+            expect(-2).toEqual(mas.floor(-1.4));
+        });
+
+        it("floor(1.44, 1) = 1.4", function () {
+            expect(1.4).toEqual(mas.floor(1.44, 1));
+        });
+
+        it("floor(-1.45, 1) = -1.5", function () {
+            expect(-1.5).toEqual(mas.floor(-1.45, 1));
+        });
+
+        it("floor(314.1592, 3) = 314.159", function () {
+            expect(314.159).toEqual(mas.floor(314.1592, 3));
+        });
+
+        it("floor(314.1592, -2) = 300", function () {
+            expect(300).toEqual(mas.floor(314.1592, -2));
+        });
+
+        it("floor('10a') is NaN", function () {
+            expect(true).toEqual(isNaN(mas.floor('10a')));
+        });
+
+        it("floor(314.1592, '2q') is NaN", function () {
+            expect(true).toEqual(isNaN(mas.floor(314.1592, '2q')));
+        });
+
+        it("floor('10.5') = 10", function () {
+            expect(10).toEqual(mas.floor('10.5'));
+        });
+    });
+
     describe("is_blank()", function () {
         it("undefined is blank.", function () {
             expect(true).toEqual(mas.is_blank(undefined));

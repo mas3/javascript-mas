@@ -27,6 +27,20 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 var mas = {};
 
 /**
+ * Returns the largest integer less than or equal to a value.
+ * @param  {Number} val value.
+ * @param  {Number} [precision=0] number of fractional digits.
+ * @return {Number} rounded down value.
+ */
+mas.floor = function (val, precision) {
+    if (mas.is_blank(precision)) {
+        precision = 0;
+    }
+
+    return Math.floor(val * Math.pow(10, precision)) / Math.pow(10, precision);
+};
+
+/**
  * Indicates whether the specified value is blank(undefined or null or
  * empty string).
  * @param  {String} val value.

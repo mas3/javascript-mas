@@ -27,6 +27,20 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 var mas = {};
 
 /**
+ * Returns the smallest integer greater than or equal to a value.
+ * @param  {Number} val value.
+ * @param  {Number} [precision=0] number of fractional digits.
+ * @return {Number} rounded up value.
+ */
+mas.ceil = function (val, precision) {
+    if (mas.is_blank(precision)) {
+        precision = 0;
+    }
+
+    return Math.ceil(val * Math.pow(10, precision)) / Math.pow(10, precision);
+};
+
+/**
  * Returns the largest integer less than or equal to a value.
  * @param  {Number} val value.
  * @param  {Number} [precision=0] number of fractional digits.

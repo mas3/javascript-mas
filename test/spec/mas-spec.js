@@ -23,6 +23,44 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 describe("mas", function () {
 
+    describe("ceil()", function () {
+        it("ceil(1.4) = 2", function () {
+            expect(2).toEqual(mas.ceil(1.4));
+        });
+
+        it("ceil(-1.4) = -1", function () {
+            expect(-1).toEqual(mas.ceil(-1.4));
+        });
+
+        it("ceil(1.44, 1) = 1.5", function () {
+            expect(1.5).toEqual(mas.ceil(1.44, 1));
+        });
+
+        it("ceil(-1.45, 1) = -1.4", function () {
+            expect(-1.4).toEqual(mas.ceil(-1.45, 1));
+        });
+
+        it("ceil(314.1592, 3) = 314.16", function () {
+            expect(314.16).toEqual(mas.ceil(314.1592, 3));
+        });
+
+        it("ceil(314.1592, -2) = 400", function () {
+            expect(400).toEqual(mas.ceil(314.1592, -2));
+        });
+
+        it("ceil('10a') is NaN", function () {
+            expect(true).toEqual(isNaN(mas.ceil('10a')));
+        });
+
+        it("ceil(314.1592, '2q') is NaN", function () {
+            expect(true).toEqual(isNaN(mas.ceil(314.1592, '2q')));
+        });
+
+        it("ceil('10.5') = 11", function () {
+            expect(11).toEqual(mas.ceil('10.5'));
+        });
+    });
+
     describe("floor()", function () {
         it("floor(1.4) = 1", function () {
             expect(1).toEqual(mas.floor(1.4));

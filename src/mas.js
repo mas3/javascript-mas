@@ -55,6 +55,25 @@ mas.floor = function (val, precision) {
 };
 
 /**
+ * Replaces each format item in values.
+ * @param  {String} format format string.
+ * @param  {...*} var_args replace values.
+ * @return {String} replaced string.
+ * @example
+ * mas.format("{0} = {1}", key, value);
+ */
+mas.format = function (format, var_args) {
+    var items = arguments;
+    return format.replace(/\{([0-9]+)\}/g, function () {
+        var replaceString = items[+arguments[1] + 1];
+        if (mas.is_blank(replaceString)) {
+            return "";
+        }
+        return replaceString;
+    });
+};
+
+/**
  * Indicates whether the specified value is blank(undefined or null or
  * empty string).
  * @param  {String} val value.

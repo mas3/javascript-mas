@@ -99,6 +99,42 @@ describe("mas", function () {
         });
     });
 
+    describe("format()", function () {
+        it("single format item only.", function () {
+            expect("item1").toEqual(mas.format("{0}", "item1"));
+        });
+
+        it("single format item with other string.", function () {
+            expect("This is item1.").toEqual(
+                mas.format("This is {0}.", "item1"));
+        });
+
+        it("multi format items.", function () {
+            expect("item1 item2 item3").toEqual(
+                mas.format("{0} {1} {2}", "item1", "item2", "item3"));
+        });
+
+        it("duplicate format items.", function () {
+            expect("item1 item2 item1").toEqual(
+                mas.format("{0} {1} {0}", "item1", "item2"));
+        });
+
+        it("replace number value.", function () {
+            expect("1.2 + 3.4 = 4.6").toEqual(
+                mas.format("{0} + {1} = {2}", 1.2, 3.4, 4.6));
+        });
+
+        it("lack arguments.", function () {
+            expect("item1,").toEqual(
+                mas.format("{0},{1}", "item1"));
+        });
+
+        it("include undefined and null vlaues.", function () {
+            expect("item1,,").toEqual(
+                mas.format("{0},{1},{2}", "item1", undefined, null));
+        });
+    });
+
     describe("is_blank()", function () {
         it("undefined is blank.", function () {
             expect(true).toEqual(mas.is_blank(undefined));

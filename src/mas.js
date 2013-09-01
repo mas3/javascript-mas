@@ -1,4 +1,7 @@
 /*
+JavaScript misc library.
+https://github.com/mas3/javascript-mas
+
 The MIT License (MIT)
 
 Copyright (c) 2013 MASUDA Takashi

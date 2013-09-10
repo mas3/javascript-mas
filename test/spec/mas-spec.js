@@ -25,135 +25,136 @@ describe("mas", function () {
 
     describe("ceil()", function () {
         it("ceil(1.4) = 2", function () {
-            expect(2).toEqual(mas.ceil(1.4));
+            expect(mas.ceil(1.4)).toEqual(2);
         });
 
         it("ceil(-1.4) = -1", function () {
-            expect(-1).toEqual(mas.ceil(-1.4));
+            expect(mas.ceil(-1.4)).toEqual(-1);
         });
 
         it("ceil(1.44, 1) = 1.5", function () {
-            expect(1.5).toEqual(mas.ceil(1.44, 1));
+            expect(mas.ceil(1.44, 1)).toEqual(1.5);
         });
 
         it("ceil(-1.45, 1) = -1.4", function () {
-            expect(-1.4).toEqual(mas.ceil(-1.45, 1));
+            expect(mas.ceil(-1.45, 1)).toEqual(-1.4);
         });
 
         it("ceil(314.1592, 3) = 314.16", function () {
-            expect(314.16).toEqual(mas.ceil(314.1592, 3));
+            expect(mas.ceil(314.1592, 3)).toEqual(314.16);
         });
 
         it("ceil(314.1592, -2) = 400", function () {
-            expect(400).toEqual(mas.ceil(314.1592, -2));
+            expect(mas.ceil(314.1592, -2)).toEqual(400);
         });
 
         it("ceil('10a') is NaN", function () {
-            expect(true).toEqual(isNaN(mas.ceil('10a')));
+            expect(isNaN(mas.ceil('10a'))).toBeTruthy();
         });
 
         it("ceil(314.1592, '2q') is NaN", function () {
-            expect(true).toEqual(isNaN(mas.ceil(314.1592, '2q')));
+            expect(isNaN(mas.ceil(314.1592, '2q'))).toBeTruthy();
         });
 
         it("ceil('10.5') = 11", function () {
-            expect(11).toEqual(mas.ceil('10.5'));
+            expect(mas.ceil('10.5')).toEqual(11);
         });
     });
 
     describe("floor()", function () {
         it("floor(1.4) = 1", function () {
-            expect(1).toEqual(mas.floor(1.4));
+            expect(mas.floor(1.4)).toEqual(1);
         });
 
         it("floor(-1.4) = -2", function () {
-            expect(-2).toEqual(mas.floor(-1.4));
+            expect(mas.floor(-1.4)).toEqual(-2);
         });
 
         it("floor(1.44, 1) = 1.4", function () {
-            expect(1.4).toEqual(mas.floor(1.44, 1));
+            expect(mas.floor(1.44, 1)).toEqual(1.4);
         });
 
         it("floor(-1.45, 1) = -1.5", function () {
-            expect(-1.5).toEqual(mas.floor(-1.45, 1));
+            expect(mas.floor(-1.45, 1)).toEqual(-1.5);
         });
 
         it("floor(314.1592, 3) = 314.159", function () {
-            expect(314.159).toEqual(mas.floor(314.1592, 3));
+            expect(mas.floor(314.1592, 3)).toEqual(314.159);
         });
 
         it("floor(314.1592, -2) = 300", function () {
-            expect(300).toEqual(mas.floor(314.1592, -2));
+            expect(mas.floor(314.1592, -2)).toEqual(300);
         });
 
         it("floor('10a') is NaN", function () {
-            expect(true).toEqual(isNaN(mas.floor('10a')));
+            expect(isNaN(mas.floor('10a'))).toBeTruthy();
         });
 
         it("floor(314.1592, '2q') is NaN", function () {
-            expect(true).toEqual(isNaN(mas.floor(314.1592, '2q')));
+            expect(isNaN(mas.floor(314.1592, '2q'))).toBeTruthy();
         });
 
         it("floor('10.5') = 10", function () {
-            expect(10).toEqual(mas.floor('10.5'));
+            expect(mas.floor('10.5')).toEqual(10);
         });
     });
 
     describe("format()", function () {
         it("single format item only.", function () {
-            expect("item1").toEqual(mas.format("{0}", "item1"));
+            expect(mas.format("{0}", "item1")).toEqual("item1");
         });
 
         it("single format item with other string.", function () {
-            expect("This is item1.").toEqual(
-                mas.format("This is {0}.", "item1"));
+            expect(mas.format("This is {0}.", "item1")).toEqual(
+                "This is item1.");
         });
 
         it("multi format items.", function () {
-            expect("item1 item2 item3").toEqual(
-                mas.format("{0} {1} {2}", "item1", "item2", "item3"));
+            expect(
+                mas.format("{0} {1} {2}", "item1", "item2", "item3")
+                ).toEqual("item1 item2 item3");
         });
 
         it("duplicate format items.", function () {
-            expect("item1 item2 item1").toEqual(
-                mas.format("{0} {1} {0}", "item1", "item2"));
+            expect(mas.format("{0} {1} {0}", "item1", "item2")).toEqual(
+                "item1 item2 item1");
         });
 
         it("replace number value.", function () {
-            expect("1.2 + 3.4 = 4.6").toEqual(
-                mas.format("{0} + {1} = {2}", 1.2, 3.4, 4.6));
+            expect(mas.format("{0} + {1} = {2}", 1.2, 3.4, 4.6)).toEqual(
+                "1.2 + 3.4 = 4.6");
         });
 
         it("lack arguments.", function () {
-            expect("item1,").toEqual(
-                mas.format("{0},{1}", "item1"));
+            expect(mas.format("{0},{1}", "item1")).toEqual(
+                "item1,");
         });
 
         it("include undefined and null vlaues.", function () {
-            expect("item1,,").toEqual(
-                mas.format("{0},{1},{2}", "item1", undefined, null));
+            expect(mas.format("{0},{1},{2}", "item1", undefined, null)
+                ).toEqual("item1,,");
         });
     });
 
     describe("is_blank()", function () {
         it("undefined is blank.", function () {
-            expect(true).toEqual(mas.is_blank(undefined));
+            expect(mas.is_blank(undefined)).toBeTruthy();
         });
 
         it("null is blank.", function () {
-            expect(true).toEqual(mas.is_blank(null));
+            expect(mas.is_blank(null)).toBeTruthy();
         });
 
         it("empty string is blank.", function () {
-            expect(true).toEqual(mas.is_blank(""));
+            expect(mas.is_blank("")).toBeTruthy();
         });
 
         it("0 isn't blank.", function () {
-            expect(false).toEqual(mas.is_blank(0));
+            expect(mas.is_blank(0)).toBeFalsy();
         });
 
         it("false isn't blank.", function () {
-            expect(false).toEqual(mas.is_blank(0));
+            expect(mas.is_blank(0)).toBeFalsy();
         });
     });
 
@@ -165,63 +166,63 @@ describe("mas", function () {
 
     describe("round()", function () {
         it("round(1.4) = 1", function () {
-            expect(1).toEqual(mas.round(1.4));
+            expect(mas.round(1.4)).toEqual(1);
         });
 
         it("round(1.5) = 2", function () {
-            expect(2).toEqual(mas.round(1.5));
+            expect(mas.round(1.5)).toEqual(2);
         });
 
         it("round(1.6, 0) = 2", function () {
-            expect(2).toEqual(mas.round(1.6, 0));
+            expect(mas.round(1.6, 0)).toEqual(2);
         });
 
         it("round(-1.4) = -1", function () {
-            expect(-1).toEqual(mas.round(-1.4));
+            expect(mas.round(-1.4)).toEqual(-1);
         });
 
         it("round(-1.5) = -1", function () {
-            expect(-1).toEqual(mas.round(-1.5));
+            expect(mas.round(-1.5)).toEqual(-1);
         });
 
         it("round(-1.6) = -2", function () {
-            expect(-2).toEqual(mas.round(-1.6));
+            expect(mas.round(-1.6)).toEqual(-2);
         });
 
         it("round(1.44, 1) = 1.4", function () {
-            expect(1.4).toEqual(mas.round(1.44, 1));
+            expect(mas.round(1.44, 1)).toEqual(1.4);
         });
 
         it("round(1.45, 1) = 1.5", function () {
-            expect(1.5).toEqual(mas.round(1.45, 1));
+            expect(mas.round(1.45, 1)).toEqual(1.5);
         });
 
         it("round(-1.45, 1) = -1.4", function () {
-            expect(-1.4).toEqual(mas.round(-1.45, 1));
+            expect(mas.round(-1.45, 1)).toEqual(-1.4);
         });
 
         it("round(-1.451, 1) = -1.5", function () {
-            expect(-1.5).toEqual(mas.round(-1.451, 1));
+            expect(mas.round(-1.451, 1)).toEqual(-1.5);
         });
 
         it("round(314.1592, 3) = 314.159", function () {
-            expect(314.159).toEqual(mas.round(314.1592, 3));
+            expect(mas.round(314.1592, 3)).toEqual(314.159);
         });
 
         it("round(314.1592, -2) = 300", function () {
-            expect(300).toEqual(mas.round(314.1592, -2));
+            expect(mas.round(314.1592, -2)).toEqual(300);
         });
 
         it("round('10a') is NaN", function () {
-            expect(true).toEqual(isNaN(mas.round('10a')));
+            expect(isNaN(mas.round('10a'))).toBeTruthy();
         });
 
         it("round(314.1592, '2q') is NaN", function () {
-            expect(true).toEqual(isNaN(mas.round(314.1592, '2q')));
+            expect(isNaN(mas.round(314.1592, '2q'))).toBeTruthy();
         });
 
         it("round('10.5') = 11", function () {
-            expect(11).toEqual(mas.round('10.5'));
+            expect(mas.round('10.5')).toEqual(11);
         });
     });
 });

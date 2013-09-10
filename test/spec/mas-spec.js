@@ -157,6 +157,12 @@ describe("mas", function () {
         });
     });
 
+    describe("language()", function () {
+        it("should be 2 character alphabetical.", function () {
+            expect(mas.language()).toMatch(/^[a-z]{2}$/);
+        });
+    });
+
     describe("round()", function () {
         it("round(1.4) = 1", function () {
             expect(1).toEqual(mas.round(1.4));

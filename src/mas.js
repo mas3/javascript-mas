@@ -91,6 +91,17 @@ mas.is_blank = function (val) {
 };
 
 /**
+ * Browser language.
+ * @return {String} 2 character language code.
+ */
+mas.language = function () {
+    return (
+        navigator.browserLanguage ||
+        navigator.language ||
+        navigator.userLanguage).substr(0,2);
+};
+
+/**
  * Rounds a value.
  * @param  {Number} val value.
  * @param  {Number} [precision=0] number of fractional digits.

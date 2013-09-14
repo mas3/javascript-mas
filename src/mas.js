@@ -29,9 +29,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 var mas = {};
 
-mas.ABBREVIATED_DAYS = {};
-mas.ABBREVIATED_DAYS['en'] = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-mas.ABBREVIATED_DAYS['ja'] = ['日', '月', '火', '水', '木', '金', '土'];
+mas.AMPM = {};
+mas.AMPM['en'] = ['AM', 'PM'];
+mas.AMPM['ja'] = ['午前', '午後'];
 
 mas.DAYS = {};
 mas.DAYS['en'] = [
@@ -41,12 +41,9 @@ mas.DAYS['ja'] = [
     '日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日',
     '土曜日'];
 
-mas.ABBREVIATED_MONTHS = {};
-mas.ABBREVIATED_MONTHS['en'] = [
-    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct',
-    'Nov', 'Dec'];
-mas.ABBREVIATED_MONTHS['ja'] = [
-    '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+mas.DAYS_ABBREVIATED = {};
+mas.DAYS_ABBREVIATED['en'] = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+mas.DAYS_ABBREVIATED['ja'] = ['日', '月', '火', '水', '木', '金', '土'];
 
 mas.MONTHS = {};
 mas.MONTHS['en'] = [
@@ -56,9 +53,12 @@ mas.MONTHS['ja'] = [
     '1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月',
     '11月', '12月'];
 
-mas.AMPM = {};
-mas.AMPM['en'] = ['AM', 'PM'];
-mas.AMPM['ja'] = ['午前', '午後'];
+mas.MONTHS_ABBREVIATED = {};
+mas.MONTHS_ABBREVIATED['en'] = [
+    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct',
+    'Nov', 'Dec'];
+mas.MONTHS_ABBREVIATED['ja'] = [
+    '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
 
 /**
  * Returns the smallest integer greater than or equal to a value.
@@ -125,9 +125,9 @@ mas.dateFormat = function (date, format, lang) {
         return days[date.getDay()];
     };
     f['ddd'] = function (date, lang) {
-        var days = mas.ABBREVIATED_DAYS[lang];
+        var days = mas.DAYS_ABBREVIATED[lang];
         if (days === undefined) {
-            days = mas.ABBREVIATED_DAYS['en'];
+            days = mas.DAYS_ABBREVIATED['en'];
         }
         return days[date.getDay()];
     };
@@ -145,9 +145,9 @@ mas.dateFormat = function (date, format, lang) {
         return months[date.getMonth()];
     };
     f['MMM'] = function (date, lang) {
-        var months = mas.ABBREVIATED_MONTHS[lang];
+        var months = mas.MONTHS_ABBREVIATED[lang];
         if (months === undefined) {
-            months = mas.ABBREVIATED_MONTHS['en'];
+            months = mas.MONTHS_ABBREVIATED['en'];
         }
         return months[date.getMonth()];
     };

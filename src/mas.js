@@ -91,8 +91,6 @@ mas.ceil = function (val, precision) {
  * //   HH   Hours(01-23)
  * //   h    Hours(1-12)
  * //   hh   Hours(01-12)
- * //   hh   18 -> 06
- * //   hh   0 -> 12
  * //   M    Month of year(1-12)
  * //   MM   Month of year(01-12)
  * //   MMM  Month name(abbreviated)

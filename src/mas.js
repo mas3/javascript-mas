@@ -29,6 +29,37 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 var mas = {};
 
+mas.ABBREVIATED_DAYS = {};
+mas.ABBREVIATED_DAYS['en'] = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+mas.ABBREVIATED_DAYS['ja'] = ['日', '月', '火', '水', '木', '金', '土'];
+
+mas.DAYS = {};
+mas.DAYS['en'] = [
+    'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday',
+    'Saturday'];
+mas.DAYS['ja'] = [
+    '日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日',
+    '土曜日'];
+
+mas.ABBREVIATED_MONTHS = {};
+mas.ABBREVIATED_MONTHS['en'] = [
+    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct',
+    'Nov', 'Dec'];
+mas.ABBREVIATED_MONTHS['ja'] = [
+    '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+
+mas.MONTHS = {};
+mas.MONTHS['en'] = [
+    'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
+    'September', 'October', 'November', 'December'];
+mas.MONTHS['ja'] = [
+    '1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月',
+    '11月', '12月'];
+
+mas.AMPM = {};
+mas.AMPM['en'] = ['AM', 'PM'];
+mas.AMPM['ja'] = ['午前', '午後'];
+
 /**
  * Returns the smallest integer greater than or equal to a value.
  * @param  {Number} val value.
@@ -41,6 +72,119 @@ mas.ceil = function (val, precision) {
     }
 
     return Math.ceil(val * Math.pow(10, precision)) / Math.pow(10, precision);
+};
+
+/**
+ * Date Formatting.
+ * @param  {Date} date date.
+ * @param  {String} format format string.
+ * @param  {String} [lang='en'] language.
+ * @return {String} formatted string.
+ * @example
+ * mas.dateFormat(date, "yyyy-MM-dd HH:mm:ss");
+ * // Format:
+ * //   d    Day of month(1-31)
+ * //   dd   Day of month(01-31)
+ * //   ddd  Day name(abbreviated)
+ * //   dddd Day name(full)
+ * //   H    Hours(0-23)
+ * //   HH   Hours(01-23)
+ * //   h    Hours(1-12)
+ * //   hh   Hours(01-12)
+ * //   hh   18 -> 06
+ * //   hh   0 -> 12
+ * //   M    Month of year(1-12)
+ * //   MM   Month of year(01-12)
+ * //   MMM  Month name(abbreviated)
+ * //   MMMM Month name(full)
+ * //   m    Minutes(0-59)
+ * //   mm   Minutes(00-59)
+ * //   s    Seconds(0-59)
+ * //   ss   Seconds(00-59)
+ * //   t    AM/PM(first character)
+ * //   tt   AM/PM
+ * //   yy   Year(00-99)
+ * //   yyyy Year
+ */
+mas.dateFormat = function (date, format, lang) {
+    var f = {};
+    var hHours = function (date) {
+        var hour = date.getHours();
+        hour = hour % 12;
+        hour = hour === 0 ? 12 : hour;
+        return hour;
+    };
+
+    if (mas.is_blank(lang)) {
+        lang = 'en';
+    }
+
+    f['dddd'] = function (date, lang) {
+        var days = mas.DAYS[lang];
+        if (days === undefined) {
+            days = mas.DAYS['en'];
+        }
+        return days[date.getDay()];
+    };
+    f['ddd'] = function (date, lang) {
+        var days = mas.ABBREVIATED_DAYS[lang];
+        if (days === undefined) {
+            days = mas.ABBREVIATED_DAYS['en'];
+        }
+        return days[date.getDay()];
+    };
+    f['dd'] = function (date) { return mas.lpad(date.getDate(), 2, '0'); };
+    f['d'] = function (date) { return date.getDate() + ""; };
+    f['HH'] = function (date) { return mas.lpad(date.getHours(), 2, '0'); };
+    f['H'] = function (date) { return date.getHours() + ""; };
+    f['hh'] = function (date) { return mas.lpad(hHours(date), 2, '0'); };
+    f['h'] = function (date) { return hHours(date) + ""; };
+    f['MMMM'] = function (date, lang) {
+        var months = mas.MONTHS[lang];
+        if (months === undefined) {
+            months = mas.MONTHS['en'];
+        }
+        return months[date.getMonth()];
+    };
+    f['MMM'] = function (date, lang) {
+        var months = mas.ABBREVIATED_MONTHS[lang];
+        if (months === undefined) {
+            months = mas.ABBREVIATED_MONTHS['en'];
+        }
+        return months[date.getMonth()];
+    };
+    f['MM'] = function (date) {
+        return mas.lpad(date.getMonth() + 1, 2, '0');
+    };
+    f['M'] = function (date) { return date.getMonth() + 1 + ""; };
+    f['mm'] = function (date) {return mas.lpad(date.getMinutes(), 2, '0'); };
+    f['m'] = function (date) { return date.getMinutes() + ""; };
+    f['ss'] = function (date) {return mas.lpad(date.getSeconds(), 2, '0'); };
+    f['s'] = function (date) { return date.getSeconds() + ""; };
+    f['tt'] = function (date, lang) {
+        var ampm = mas.AMPM[lang];
+        if (ampm === undefined) {
+            ampm = mas.AMPM['en'];
+        }
+        return ampm[date.getHours() >= 12 ? 1 : 0];
+    };
+    f['t'] = function (date, lang) {
+        return f['tt'](date, lang).substr(0, 1);
+    };
+    f['yy'] = function (date) {
+        return mas.lpad(Math.abs(date.getFullYear() % 100), 2, '0');
+    };
+    f['yyyy'] = function (date) { return date.getFullYear() + ""; };
+
+    return format.replace(/(dddd|ddd|dd|d|HH|H|hh|h|MMMM|MMM|MM|M|mm|m|ss|s|tt|t|yyyy|yy)/g, function () {
+        var specifier = arguments[1],
+            replaced;
+        replaced = f[specifier](date, lang);
+        if (replaced === undefined) {
+            replaced = specifier;
+        }
+        return replaced;
+    });
 };
 
 /**
@@ -99,6 +243,29 @@ mas.language = function () {
         navigator.browserLanguage ||
         navigator.language ||
         navigator.userLanguage).substr(0,2);
+};
+
+/**
+ * Pad a string with a set of characters from the left side.
+ * @param  {String} val base value.
+ * @param  {String} paddedLength number of characters.
+ * @param  {String} [padChar= SPACE] pad character.
+ * @return {String} padded value.
+ */
+mas.lpad = function (val, paddedLength, padChar) {
+    var str = val + "",
+        length = str.length,
+        i;
+    if (length >= paddedLength) {
+        return str;
+    }
+    if (mas.is_blank(padChar)) {
+        padChar = ' ';
+    }
+    for (i = length; i < paddedLength; i++) {
+        str = padChar + str;
+    }
+    return str;
 };
 
 /**

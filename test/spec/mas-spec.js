@@ -61,6 +61,133 @@ describe("mas", function () {
         });
     });
 
+    describe("dateFormat()", function () {
+        var targetDate = new Date(2003, 8, 1, 8, 5, 2);
+
+        it("format: d; Day of month(1-31)", function () {
+            expect(mas.dateFormat(targetDate, 'd')).toEqual('1');
+        });
+
+        it("format: dd; Day of month(01-31)", function () {
+            expect(mas.dateFormat(targetDate, 'dd')).toEqual('01');
+        });
+
+        it("format: ddd; Day name(abbreviated)", function () {
+            expect(mas.dateFormat(targetDate, 'ddd')).toEqual('Mon');
+        });
+
+        it("format: ddd; Day name(abbreviated); Japanese", function () {
+            expect(mas.dateFormat(targetDate, 'ddd', 'ja')).toEqual('月');
+        });
+
+        it("format: dddd; Day name(full)", function () {
+            expect(mas.dateFormat(targetDate, 'dddd')).toEqual('Monday');
+        });
+
+        it("format: dddd; Day name(full); Japanese", function () {
+            expect(mas.dateFormat(targetDate, 'dddd', 'ja')).toEqual('月曜日');
+        });
+
+        it("format: H; Hours(0-23)", function () {
+            expect(mas.dateFormat(targetDate, 'H')).toEqual('8');
+        });
+
+        it("format: HH; Hours(01-23)", function () {
+            expect(mas.dateFormat(targetDate, 'HH')).toEqual('08');
+        });
+
+        it("format: h; Hours(1-12)", function () {
+            expect(mas.dateFormat(targetDate, 'h')).toEqual('8');
+        });
+
+        it("format: hh; Hours(01-12)", function () {
+            expect(mas.dateFormat(targetDate, 'hh')).toEqual('08');
+        });
+
+        it("format: hh; 18 -> 06", function () {
+            expect(
+                mas.dateFormat(new Date(2003, 8, 1, 18, 5, 2), 'hh')
+            ).toEqual('06');
+        });
+
+        it("format: hh; 0 -> 12", function () {
+            expect(
+                mas.dateFormat(new Date(2003, 8, 1, 0, 15, 2), 'hh')
+            ).toEqual('12');
+        });
+
+        it("format: M; Month of year(1-12)", function () {
+            expect(mas.dateFormat(targetDate, 'M')).toEqual('9');
+        });
+
+        it("format: MM; Month of year(01-12)", function () {
+            expect(mas.dateFormat(targetDate, 'MM')).toEqual('09');
+        });
+
+        it("format: MMM; Month name(abbreviated)", function () {
+            expect(mas.dateFormat(targetDate, 'MMM')).toEqual('Sep');
+        });
+
+        it("format: MMM; Month name(abbreviated); Japanese", function () {
+            expect(mas.dateFormat(targetDate, 'MMM', 'ja')).toEqual('9');
+        });
+
+        it("format: MMMM; Month name(full)", function () {
+            expect(mas.dateFormat(targetDate, 'MMMM')).toEqual('September');
+        });
+
+        it("format: MMMM; Month name(full); Japanese", function () {
+            expect(mas.dateFormat(targetDate, 'MMMM', 'ja')).toEqual('9月');
+        });
+
+        it("format: m; Minutes(0-59)", function () {
+            expect(mas.dateFormat(targetDate, 'm')).toEqual('5');
+        });
+
+        it("format: mm; Minutes(00-59)", function () {
+            expect(mas.dateFormat(targetDate, 'mm')).toEqual('05');
+        });
+
+        it("format: s; Seconds(0-59)", function () {
+            expect(mas.dateFormat(targetDate, 's')).toEqual('2');
+        });
+
+        it("format: ss; Seconds(00-59)", function () {
+            expect(mas.dateFormat(targetDate, 'ss')).toEqual('02');
+        });
+
+        it("format: t; AM/PM(first character)", function () {
+            expect(mas.dateFormat(targetDate, 't')).toEqual('A');
+        });
+
+        it("format: t; AM/PM(first character); Japanese", function () {
+            expect(mas.dateFormat(targetDate, 't', 'ja')).toEqual('午');
+        });
+
+        it("format: tt; AM/PM", function () {
+            expect(mas.dateFormat(targetDate, 'tt')).toEqual('AM');
+        });
+
+        it("format: tt; AM/PM; Japanese", function () {
+            expect(mas.dateFormat(targetDate, 'tt', 'ja')).toEqual('午前');
+        });
+
+        it("format: yy; Year(00-99)", function () {
+            expect(mas.dateFormat(targetDate, 'yy')).toEqual('03');
+        });
+
+        it("format: yyyy; Year", function () {
+            expect(mas.dateFormat(targetDate, 'yyyy')).toEqual('2003');
+        });
+
+        it("format: yyyy-MM-dd HH:mm:ss", function () {
+            expect(mas.dateFormat(
+                targetDate, 'yyyy-MM-dd HH:mm:ss')
+            ).toEqual('2003-09-01 08:05:02');
+        });
+
+    });
+
     describe("floor()", function () {
         it("floor(1.4) = 1", function () {
             expect(mas.floor(1.4)).toEqual(1);
@@ -161,6 +288,20 @@ describe("mas", function () {
     describe("language()", function () {
         it("should be 2 character alphabetical.", function () {
             expect(mas.language()).toMatch(/^[a-z]{2}$/);
+        });
+    });
+
+    describe("lpad()", function () {
+        it("no padding if the value length is enough.", function () {
+            expect(mas.lpad("123", 3, "0")).toEqual("123");
+        });
+
+        it("padding if the value length is lack.", function () {
+            expect(mas.lpad("123", 5, "0")).toEqual("00123");
+        });
+
+        it("default padding space.", function () {
+            expect(mas.lpad("123", 5)).toEqual("  123");
         });
     });
 

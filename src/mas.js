@@ -133,8 +133,7 @@ mas.dateFormat = function (date, format, lang) {
 
     return format.replace(
         /(dddd|ddd|dd|d|HH|H|hh|h|MMMM|MMM|MM|M|mm|m|ss|s|tt|t|yyyy|yy)/g,
-        function () {
-            var specifier = arguments[1];
+        function (specifier) {
             return f[specifier](date, lang) || specifier;
         });
 };

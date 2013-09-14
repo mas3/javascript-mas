@@ -63,10 +63,7 @@ mas.dateLocales = {
  * @return {Number} rounded up value.
  */
 mas.ceil = function (val, precision) {
-    if (mas.isBlank(precision)) {
-        precision = 0;
-    }
-
+    precision = precision || 0;
     return Math.ceil(val * Math.pow(10, precision)) / Math.pow(10, precision);
 };
 
@@ -149,10 +146,7 @@ mas.dateFormat = function (date, format, lang) {
  * @return {Number} rounded down value.
  */
 mas.floor = function (val, precision) {
-    if (mas.isBlank(precision)) {
-        precision = 0;
-    }
-
+    precision = precision || 0;
     return Math.floor(val * Math.pow(10, precision)) / Math.pow(10, precision);
 };
 
@@ -230,9 +224,6 @@ mas.lpad = function (val, paddedLength, padChar) {
  * @return {Number} rounded value.
  */
 mas.round = function (val, precision) {
-    if (mas.isBlank(precision)) {
-        precision = 0;
-    }
-
+    precision = precision || 0;
     return Math.round(val * Math.pow(10, precision)) / Math.pow(10, precision);
 };

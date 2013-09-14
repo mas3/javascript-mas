@@ -67,7 +67,7 @@ mas.AMPM['ja'] = ['午前', '午後'];
  * @return {Number} rounded up value.
  */
 mas.ceil = function (val, precision) {
-    if (mas.is_blank(precision)) {
+    if (mas.isBlank(precision)) {
         precision = 0;
     }
 
@@ -115,7 +115,7 @@ mas.dateFormat = function (date, format, lang) {
         return hour;
     };
 
-    if (mas.is_blank(lang)) {
+    if (mas.isBlank(lang)) {
         lang = 'en';
     }
 
@@ -194,7 +194,7 @@ mas.dateFormat = function (date, format, lang) {
  * @return {Number} rounded down value.
  */
 mas.floor = function (val, precision) {
-    if (mas.is_blank(precision)) {
+    if (mas.isBlank(precision)) {
         precision = 0;
     }
 
@@ -213,7 +213,7 @@ mas.format = function (format, var_args) {
     var items = arguments;
     return format.replace(/\{([0-9]+)\}/g, function () {
         var replaceString = items[+arguments[1] + 1];
-        if (mas.is_blank(replaceString)) {
+        if (mas.isBlank(replaceString)) {
             return "";
         }
         return replaceString;
@@ -226,7 +226,7 @@ mas.format = function (format, var_args) {
  * @param  {String} val value.
  * @return {String} true if the val parameter is blank; otherwise, false.
  */
-mas.is_blank = function (val) {
+mas.isBlank = function (val) {
     if (val === undefined || val === null || val === "") {
         return true;
     }
@@ -259,7 +259,7 @@ mas.lpad = function (val, paddedLength, padChar) {
     if (length >= paddedLength) {
         return str;
     }
-    if (mas.is_blank(padChar)) {
+    if (mas.isBlank(padChar)) {
         padChar = ' ';
     }
     for (i = length; i < paddedLength; i++) {
@@ -275,7 +275,7 @@ mas.lpad = function (val, paddedLength, padChar) {
  * @return {Number} rounded value.
  */
 mas.round = function (val, precision) {
-    if (mas.is_blank(precision)) {
+    if (mas.isBlank(precision)) {
         precision = 0;
     }
 

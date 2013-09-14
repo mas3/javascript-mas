@@ -263,25 +263,25 @@ describe("mas", function () {
         });
     });
 
-    describe("is_blank()", function () {
+    describe("isBlank()", function () {
         it("undefined is blank.", function () {
-            expect(mas.is_blank(undefined)).toBeTruthy();
+            expect(mas.isBlank(undefined)).toBeTruthy();
         });
 
         it("null is blank.", function () {
-            expect(mas.is_blank(null)).toBeTruthy();
+            expect(mas.isBlank(null)).toBeTruthy();
         });
 
         it("empty string is blank.", function () {
-            expect(mas.is_blank("")).toBeTruthy();
+            expect(mas.isBlank("")).toBeTruthy();
         });
 
         it("0 isn't blank.", function () {
-            expect(mas.is_blank(0)).toBeFalsy();
+            expect(mas.isBlank(0)).toBeFalsy();
         });
 
         it("false isn't blank.", function () {
-            expect(mas.is_blank(0)).toBeFalsy();
+            expect(mas.isBlank(0)).toBeFalsy();
         });
     });
 

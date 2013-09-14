@@ -29,36 +29,32 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 var mas = {};
 
-mas.AMPM = {};
-mas.AMPM['en'] = ['AM', 'PM'];
-mas.AMPM['ja'] = ['午前', '午後'];
-
-mas.DAYS = {};
-mas.DAYS['en'] = [
-    'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday',
-    'Saturday'];
-mas.DAYS['ja'] = [
-    '日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日',
-    '土曜日'];
-
-mas.DAYS_ABBREVIATED = {};
-mas.DAYS_ABBREVIATED['en'] = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-mas.DAYS_ABBREVIATED['ja'] = ['日', '月', '火', '水', '木', '金', '土'];
-
-mas.MONTHS = {};
-mas.MONTHS['en'] = [
-    'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August',
-    'September', 'October', 'November', 'December'];
-mas.MONTHS['ja'] = [
-    '1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月',
-    '11月', '12月'];
-
-mas.MONTHS_ABBREVIATED = {};
-mas.MONTHS_ABBREVIATED['en'] = [
-    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct',
-    'Nov', 'Dec'];
-mas.MONTHS_ABBREVIATED['ja'] = [
-    '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'];
+mas.dateLocales = {
+    en: {
+        ddd: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+        dddd: [
+            'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday',
+            'Saturday'],
+        MMM: [
+            'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep',
+            'Oct', 'Nov', 'Dec'],
+        MMMM: [
+            'January', 'February', 'March', 'April', 'May', 'June', 'July',
+            'August', 'September', 'October', 'November', 'December'],
+        tt: ['AM', 'PM']
+    },
+    ja: {
+        ddd: ['日', '月', '火', '水', '木', '金', '土'],
+        dddd: [
+            '日曜日', '月曜日', '火曜日', '水曜日', '木曜日', '金曜日',
+            '土曜日'],
+        MMM: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+        MMMM: [
+            '1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月',
+            '10月', '11月', '12月'],
+        tt: ['午前', '午後']
+    }
+};
 
 /**
  * Returns the smallest integer greater than or equal to a value.
@@ -105,84 +101,45 @@ mas.ceil = function (val, precision) {
  * //   yyyy Year
  */
 mas.dateFormat = function (date, format, lang) {
-    var f = {};
-    var hHours = function (date) {
-        var hour = date.getHours();
-        hour = hour % 12;
-        hour = hour === 0 ? 12 : hour;
-        return hour;
+    var dateLocale = mas.dateLocales[lang] || mas.dateLocales.en,
+        pad = function (val, length) { return mas.lpad(val, length, '0'); },
+        f;
+
+    f = {
+        d: function (date) { return date.getDate() + ""; },
+        dd: function (date) { return pad(date.getDate(), 2); },
+        ddd: function (date, lang) { return dateLocale.ddd[date.getDay()]; },
+        dddd: function (date, lang) { return dateLocale.dddd[date.getDay()]; },
+        H: function (date) { return date.getHours() + ""; },
+        HH: function (date) { return pad(date.getHours(), 2); },
+        h: function (date) { return (date.getHours() % 12 || 12) + ""; },
+        hh: function (date) { return pad(f.h(date), 2); },
+        M: function (date) { return date.getMonth() + 1 + ""; },
+        MM: function (date) { return pad(date.getMonth() + 1, 2); },
+        MMM: function (date, lang) { return dateLocale.MMM[date.getMonth()]; },
+        MMMM: function (date, lang) {
+                return dateLocale.MMMM[date.getMonth()];
+            },
+        m: function (date) { return date.getMinutes() + ""; },
+        mm: function (date) {return pad(date.getMinutes(), 2); },
+        s: function (date) { return date.getSeconds() + ""; },
+        ss: function (date) {return pad(date.getSeconds(), 2); },
+        t: function (date, lang) { return f.tt(date, lang).charAt(0); },
+        tt: function (date, lang) {
+                return dateLocale.tt[date.getHours() < 12 ? 0 : 1];
+            },
+        yy: function (date) {
+               return pad(Math.abs(date.getFullYear() % 100), 2);
+            },
+        yyyy: function (date) { return date.getFullYear() + ""; }
     };
 
-    if (mas.isBlank(lang)) {
-        lang = 'en';
-    }
-
-    f['dddd'] = function (date, lang) {
-        var days = mas.DAYS[lang];
-        if (days === undefined) {
-            days = mas.DAYS['en'];
-        }
-        return days[date.getDay()];
-    };
-    f['ddd'] = function (date, lang) {
-        var days = mas.DAYS_ABBREVIATED[lang];
-        if (days === undefined) {
-            days = mas.DAYS_ABBREVIATED['en'];
-        }
-        return days[date.getDay()];
-    };
-    f['dd'] = function (date) { return mas.lpad(date.getDate(), 2, '0'); };
-    f['d'] = function (date) { return date.getDate() + ""; };
-    f['HH'] = function (date) { return mas.lpad(date.getHours(), 2, '0'); };
-    f['H'] = function (date) { return date.getHours() + ""; };
-    f['hh'] = function (date) { return mas.lpad(hHours(date), 2, '0'); };
-    f['h'] = function (date) { return hHours(date) + ""; };
-    f['MMMM'] = function (date, lang) {
-        var months = mas.MONTHS[lang];
-        if (months === undefined) {
-            months = mas.MONTHS['en'];
-        }
-        return months[date.getMonth()];
-    };
-    f['MMM'] = function (date, lang) {
-        var months = mas.MONTHS_ABBREVIATED[lang];
-        if (months === undefined) {
-            months = mas.MONTHS_ABBREVIATED['en'];
-        }
-        return months[date.getMonth()];
-    };
-    f['MM'] = function (date) {
-        return mas.lpad(date.getMonth() + 1, 2, '0');
-    };
-    f['M'] = function (date) { return date.getMonth() + 1 + ""; };
-    f['mm'] = function (date) {return mas.lpad(date.getMinutes(), 2, '0'); };
-    f['m'] = function (date) { return date.getMinutes() + ""; };
-    f['ss'] = function (date) {return mas.lpad(date.getSeconds(), 2, '0'); };
-    f['s'] = function (date) { return date.getSeconds() + ""; };
-    f['tt'] = function (date, lang) {
-        var ampm = mas.AMPM[lang];
-        if (ampm === undefined) {
-            ampm = mas.AMPM['en'];
-        }
-        return ampm[date.getHours() >= 12 ? 1 : 0];
-    };
-    f['t'] = function (date, lang) {
-        return f['tt'](date, lang).substr(0, 1);
-    };
-    f['yy'] = function (date) {
-        return mas.lpad(Math.abs(date.getFullYear() % 100), 2, '0');
-    };
-    f['yyyy'] = function (date) { return date.getFullYear() + ""; };
-
-    return format.replace(/(dddd|ddd|dd|d|HH|H|hh|h|MMMM|MMM|MM|M|mm|m|ss|s|tt|t|yyyy|yy)/g, function () {
-        var specifier = arguments[1],
-            replaced;
-        replaced = f[specifier](date, lang);
-        if (replaced === undefined) {
-            replaced = specifier;
-        }
-        return replaced;
-    });
+    return format.replace(
+        /(dddd|ddd|dd|d|HH|H|hh|h|MMMM|MMM|MM|M|mm|m|ss|s|tt|t|yyyy|yy)/g,
+        function () {
+            var specifier = arguments[1];
+            return f[specifier](date, lang) || specifier;
+        });
 };
 
 /**

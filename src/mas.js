@@ -176,11 +176,7 @@ mas.format = function (format, var_args) {
  * @return {String} true if the val parameter is blank; otherwise, false.
  */
 mas.isBlank = function (val) {
-    if (val === undefined || val === null || val === "") {
-        return true;
-    }
-
-    return false;
+    return val === undefined || val === null || val === "";
 };
 
 /**

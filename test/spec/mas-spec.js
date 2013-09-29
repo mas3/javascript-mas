@@ -61,6 +61,38 @@ describe("mas", function () {
         });
     });
 
+    describe("commaFormat()", function () {
+        it("insert group separators.", function () {
+            expect(mas.commaFormat(1234567890)).toEqual('1,234,567,890');
+        });
+
+        it("target is string.", function () {
+            expect(mas.commaFormat('1234567890')).toEqual('1,234,567,890');
+        });
+
+        it("number in string.", function () {
+            expect(mas.commaFormat('total 1980000 yen.')).toEqual(
+                'total 1,980,000 yen.');
+        });
+
+        it("multi number.", function () {
+            expect(mas.commaFormat('[1000 2000 3000]')).toEqual(
+                '[1,000 2,000 3,000]');
+        });
+
+        it("space separator.", function () {
+            expect(mas.commaFormat(1234567890, ' ')).toEqual('1 234 567 890');
+        });
+
+        it("empty string.", function () {
+            expect(mas.commaFormat('')).toEqual('');
+        });
+
+        it("undefined.", function () {
+            expect(mas.commaFormat(undefined)).toEqual('');
+        });
+    });
+
     describe("dateFormat()", function () {
         var targetDate = new Date(2003, 8, 1, 8, 5, 2);
 

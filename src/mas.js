@@ -68,6 +68,22 @@ mas.ceil = function (val, precision) {
 };
 
 /**
+ * Add thousands separator.
+ * (default separator is a comma.)
+ * @param  {String} val value.
+ * @param  {String} [separator=','] separator string.
+ * @return {String} formatted string with thousands separator.
+ */
+mas.commaFormat = function (val, separator) {
+    if (mas.isBlank(val))  {
+        return "";
+    }
+    separator = separator || ',';
+    return ("" + val).replace(
+        /([0-9])(?=([0-9]{3})+(?![0-9]))/g, '$1' + separator);
+};
+
+/**
  * Date Formatting.
  * @param  {Date} date date.
  * @param  {String} format format string.

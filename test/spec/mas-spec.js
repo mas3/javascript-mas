@@ -398,4 +398,19 @@ describe("mas", function () {
             expect(mas.round('10.5')).toEqual(11);
         });
     });
+
+    describe("sum", function () {
+        it("sum numbers", function () {
+            expect(mas.sum(1.2, 3.4, 5.6)).toEqual(10.2);
+        });
+
+        it("if include strings, result NaN", function () {
+            expect(isNaN(mas.sum(1, '3a', 5))).toBeTruthy();
+        });
+
+        it("if you want to give an array parameter, use apply method",
+            function () {
+                expect(mas.sum.apply(null, [1.2, 3.4, 5.6])).toEqual(10.2);
+        });
+    });
 });

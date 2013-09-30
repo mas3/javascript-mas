@@ -238,3 +238,24 @@ mas.round = function (val, precision) {
     precision = precision || 0;
     return Math.round(val * Math.pow(10, precision)) / Math.pow(10, precision);
 };
+
+/**
+ * Sum numbers.
+ * @param  {...Number} var_args numbers.
+ * @return {Number} sum of numbers.
+ * @example
+ * mas.sum(1, 2, 3);
+ * // if you want to give an array parameter, use apply method.
+ * mas.sum.apply(null, [1, 2, 3]);
+ */
+mas.sum = function (var_args) {
+    var i,
+        sum,
+        len;
+
+    for (i = 0, sum = 0, len = arguments.length; i < len; i++) {
+        sum += arguments[i];
+    }
+
+    return sum;
+};

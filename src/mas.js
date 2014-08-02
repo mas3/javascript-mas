@@ -188,7 +188,7 @@ mas.format = function (format, var_args) {
  * Indicates whether the specified value is blank(undefined or null or
  * empty string).
  * @param  {String} val value.
- * @return {String} true if the val parameter is blank; otherwise, false.
+ * @return {Boolean} true if the val parameter is blank; otherwise, false.
  */
 mas.isBlank = function (val) {
     return val === undefined || val === null || val === "";
